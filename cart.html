@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f3f4f6;
+            color: #333;
+	    margin: 0;
+            padding: 0;
+        }
+.container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        header {
+            background: linear-gradient(to right, #11998e, #38ef7d);
+            color: #ffffff;
+            padding: 20px 0;
+            text-align: center;
+            margin-bottom: 20px;
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        header img {
+            max-width: 150px;
+            margin: 10px;
+        }
+        header h1 {
+	    text-align: center;
+            margin-bottom: 20px;
+            font-size: 2.5rem;
+            
+        }
+        header nav ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        header nav ul li a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 1.2rem;
+            transition: color 0.3s ease;
+        }
+        header nav ul li a:hover {
+            color: #f3f4f6;
+        }
+        #cart {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 300px;
+            display: none; /* Initially hidden */
+            position: fixed; /* Make the cart a floating element */
+            right: 20px;
+            top: 20px;
+        }
+        /* Change button color to green */
+button {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+/* Center align cart items */
+.cart-items {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    /* Add other styles like margin as needed */
+}
+
+
+.remove {
+  background-color: #ff6347; /* Red color for remove button */
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.footer {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.clear-cart {
+  background-color: #32cd32; /* Green color for clear cart button */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.proceed-to-checkout {
+  background-color: #32cd32; /* Green color for proceed to checkout button */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+        
+        
+    </style>
+</head>
+<body>
+    <header>
+        <img src="logo.png" alt="My Grocery Store Logo">
+        <h1>Your Shopping Cart</h1>
+        <nav>
+            <ul>
+                
+                <li><a href="javascript:void(0)" onclick="toggleCartVisibility()">Cart</a></li>
+                <li><a href="delivery.html">Delivery Details</a></li>
+                <li><a href="confirmation.html">Order Confirmation</a></li>
+            </ul>
+        </nav>
+    </header>
+ 
+<main>
+        <ul id="cartItems"></ul>
+        <div class="cart-total"></div>
+<div class="footer">
+        <button onclick="clearCart()">Clear Cart</button>
+        <button onclick="proceedToCheckout()">Proceed to Checkout</button>
+</div>
+    </main>
+    <script>
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+        function updateCartUI() {
+            const cartItemsElement = document.getElementById('cartItems');
+            cartItemsElement.innerHTML = ''; // Clear existing cart items
+            let total = 0;
+
+            cart.forEach((item, index) => {
+                const itemElement = document.createElement('li');
+                itemElement.innerHTML = `${item.name} - ${item.quantity} x $${item.price} <button onclick="removeItem(${index})">Remove</button>`;
+                cartItemsElement.appendChild(itemElement);
+                total += item.price * item.quantity;
+            });
+
+            document.querySelector('.cart-total').textContent = `Total: $${total.toFixed(2)}`;
+        }
+
+        function clearCart() {
+            localStorage.removeItem('cart');
+            cart = [];
+            updateCartUI();
+        }
+
+        function removeItem(index) {
+            cart.splice(index, 1);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartUI();
+        }
+
+        function proceedToCheckout() {
+            if (cart.length > 0) {
+                window.location.href = 'delivery.html'; // Redirect to delivery details page
+            } else {
+                alert("Your cart is empty. Please add some items before proceeding.");
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', updateCartUI);
+    </script>
+</body>
+</html>

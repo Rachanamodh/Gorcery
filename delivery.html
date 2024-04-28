@@ -1,0 +1,203 @@
+<!-- HTML (delivery.html) -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Delivery Details</title>
+<link rel="stylesheet" href="styles.css">
+
+<style>
+
+/* Header styles */
+/* styles.css */
+/* Add your global styles here */
+
+header {
+    background-color: #f3f4f6;
+    padding: 20px;
+    text-align: center;
+}
+
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+
+header {
+    background: linear-gradient(to right, #11998e, #38ef7d);
+    color: #ffffff;
+    padding: 20px 0;
+    text-align: center;
+    margin-bottom: 20px;
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+header img {
+    max-width: 150px; /* Adjust the size as needed */
+    margin: 10px; /* Add spacing around the logo */
+}
+
+
+header h1 {
+    font-size: 2.5rem;
+    margin: 0;
+}
+
+header nav ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+header nav ul li {
+    display: inline;
+}
+
+header nav ul li a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 1.2rem;
+    transition: color 0.3s ease;
+}
+
+header nav ul li a:hover {
+    color: #f3f4f6;
+}
+
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+form {
+    width: 300px;
+    margin: 0 auto;
+}
+
+label {
+    display: block;
+    margin-top: 10px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+}
+
+input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    margin-top: 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+
+</style>
+
+</head>
+<body>
+<header>
+       
+       <img src="logo.png" alt="My Grocery Store Logo">
+    <h1>My Grocery Store</h1>
+
+    <nav>
+        <ul>
+            
+            <li><a href="cart.html">Cart</a></li>
+            <li><a href="delivery.html">Delivery Details</a></li>
+	    <li><a href="confirmation.html">Order Confirmation</a></li>	
+        </ul>
+    </nav>
+    </header>
+
+<form id="deliveryForm" action="confirmation.html" method="get">
+    <label for="name">Recipient's Name (required):</label>
+    <input type="text" id="name" name="name" required>
+
+    <label for="street">Street (required):</label>
+    <input type="text" id="street" name="street" required>
+
+    <label for="city">City/Suburb (required):</label>
+    <input type="text" id="city" name="city" required>
+
+    <label for="state">State/Territory (required):</label>
+    <select id="state" name="state" required>
+        <option value="">Select State</option>
+        <option value="NSW">NSW</option>
+        <option value="VIC">VIC</option>
+        <option value="QLD">QLD</option>
+        <option value="WA">WA</option>
+        <option value="SA">SA</option>
+        <option value="TAS">TAS</option>
+        <option value="ACT">ACT</option>
+        <option value="NT">NT</option>
+        <option value="Others">Others</option>
+    </select>
+
+    <label for="mobile">Mobile Number (required):</label>
+    <input type="tel" id="mobile" name="mobile" pattern="[0-9]{10}" required>
+
+    <label for="email">Email Address (required):</label>
+    <input type="email" id="email" name="email" required>
+
+    <input type="submit" value="Place Order">
+</form>
+
+</body>
+
+<script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            document.getElementById('deliveryForm').addEventListener('submit', function(event) {
+                var formValid = true;
+                var emailInput = document.getElementById('email');
+                var mobileInput = document.getElementById('mobile');
+                var stateInput = document.getElementById('state');
+
+                // Simple email pattern for client-side validation
+                var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(emailInput.value)) {
+                    alert('Please enter a valid email address.');
+                    formValid = false;
+                }
+
+                // Simple mobile number pattern for client-side validation
+                var mobileRegex = /^[0-9]{10}$/;
+                if (!mobileRegex.test(mobileInput.value)) {
+                    alert('Please enter a valid 10-digit mobile number.');
+                    formValid = false;
+                }
+
+                if (stateInput.value === "") {
+                    alert('Please select a state.');
+                    formValid = false;
+                }
+
+                if (!formValid) {
+                    event.preventDefault(); // Prevent form submission if validation fails
+                }
+            });
+        });
+    </script>
+
+</html>

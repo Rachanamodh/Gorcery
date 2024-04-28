@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Grocery Store</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f3f4f6;
+            color: #333;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+        header {
+            background: linear-gradient(to right, #11998e, #38ef7d);
+            color: #ffffff;
+            padding: 20px 0;
+            text-align: center;
+            margin-bottom: 20px;
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        header img {
+            max-width: 150px;
+            margin: 10px;
+        }
+        header h1 {
+            font-size: 2.5rem;
+            margin: 0;
+        }
+        header nav ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        header nav ul li {
+            display: inline;
+        }
+        header nav ul li a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 1.2rem;
+            transition: color 0.3s ease;
+        }
+        header nav ul li a:hover {
+            color: #f3f4f6;
+        }
+        .search-box {
+            margin: 20px auto;
+            max-width: 600px;
+        }
+        .search-box input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            outline: none;
+        }
+        .search-box button {
+            background-color: #38ef7d;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .search-box button:hover {
+            background-color: #30c270;
+        }
+        .category {
+            cursor: pointer;
+            margin-bottom: 10px;
+            font-weight: bold;
+            text-decoration: underline;
+        }
+        .category-items {
+            display: none;
+            margin-bottom: 20px;
+        }
+        .category-items.show {
+            display: block;
+        }
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+        .product {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        .product:hover {
+            transform: translateY(-5px);
+        }
+        .product img {
+            width: 100%;
+            max-width: 200px;
+            height: auto;
+            margin-bottom: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .product h3 {
+            font-size: 1.5rem;
+            margin: 0;
+        }
+        .product p {
+            color: #666666;
+            margin-bottom: 0.5rem;
+        }
+        .product button {
+            background: linear-gradient(to right, #11998e, #38ef7d);
+            color: #ffffff;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            outline: none;
+        }
+        .product button:hover {
+            background: linear-gradient(to right, #0c8976, #30c270);
+        }
+        #cart {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 300px;
+        }
+        #cart h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+        #cart-items {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+        .cart-item button {
+            background: linear-gradient to right, #ff4d4f, #ff6382;
+            color: #ffffff;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            outline: none;
+        }
+        .cart-item button:hover {
+            background: linear-gradient to right, #e63c3f, #f34d6f);
+        }
+        .quantity {
+            display: flex;
+            align-items: center;
+        }
+        .quantity button {
+            background: linear-gradient to right, #11998e, #38ef7d);
+            color: #ffffff;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="logo.png" alt="My Grocery Store Logo">
+        <h1>My Grocery Store</h1>
+        <nav>
+            <ul>
+                <li><a href="store.html">Categories</a></li>
+                <li><a href="cart.html">Cart</a></li>
+                <li><a href="delivery.html">Delivery Details</a></li>
+                <li><a href="confirmation.html">Order Confirmation</a></li>
+            </ul>
+<ul id="cartContainer"></ul>
+        </nav>
+        <div class="search-box">
+            <input type="text" id="search-input" placeholder="Search for products...">
+            <button onclick="searchProducts()">Search</button>
+        </div>
+    </header>
+
+    <main>
+        <div id="frozen-category" class="category">
+            <h2>Frozen</h2>
+            <div class="product-grid"></div>
+        </div>
+        <div id="fresh-category" class="category">
+            <h2>Fresh</h2>
+            <div class="product-grid"></div>
+        </div>
+        <div id="beverages-category" class="category">
+            <h2>Beverages</h2>
+            <div class="product-grid"></div>
+        </div>
+        <div id="home-category" class="category">
+            <h2>Home</h2>
+            <div class="product-grid"></div>
+        </div>
+        <div id="pet-food-category" class="category">
+            <h2>Pet Food</h2>
+            <div class="product-grid"></div>
+        </div>
+    </main>
+
+    <script>
+        const products = [
+            { name: 'Frozen Pizza', category: 'frozen', price: '$5.99', unit: '1 box', stock: 10, imageUrl: 'frozen.jpg' },
+            { name: 'Frozen Vegetables', category: 'frozen', price: '$3.50', unit: '1 bag', stock: 0, imageUrl: 'frozen_vegetables.jpg' },
+            { name: 'Ice Cream', category: 'frozen', price: '$4.25', unit: '1 tub', stock: 15, imageUrl: 'icecream.jpg' },
+            { name: 'Frozen Berries', category: 'frozen', price: '$6.00', unit: '1 bag', stock: 5, imageUrl: 'berries.jpg' },
+            { name: 'Frozen Dumplings', category: 'frozen', price: '$12.99', unit: '1 pack', stock: 20, imageUrl: 'dumpling.jpg' },
+
+            { name: 'Fresh Fruits', category: 'fresh', price: '$2.99', unit: '1 lb', stock: 30, imageUrl: 'fruits.jpg' },
+            { name: 'Fresh Vegetables', category: 'fresh', price: '$1.50', unit: '1 lb', stock: 25, imageUrl: 'vegetables.jpg' },
+            { name: 'Fresh Meat', category: 'fresh', price: '$8.45', unit: '1 lb', stock: 10, imageUrl: 'meat.jpg' },
+            { name: 'Fresh Fish', category: 'fresh', price: '$13.60', unit: '1 lb', stock: 7, imageUrl: 'fish.jpg' },
+            { name: 'Fresh Herbs', category: 'fresh', price: '$3.00', unit: '1 bunch', stock: 15, imageUrl: 'herbs.jpg' },
+
+            { name: 'Soda', category: 'beverages', price: '$1.99', unit: '1 can', stock: 50, imageUrl: 'soda.jpg' },
+            { name: 'Juice', category: 'beverages', price: '$4.50', unit: '1 bottle', stock: 20, imageUrl: 'juice.jpg' },
+            { name: 'Coffee', category: 'beverages', price: '$14.99', unit: '1 bag', stock: 15, imageUrl: 'coffee.jpg' },
+            { name: 'Tea', category: 'beverages', price: '$5.99', unit: '1 box', stock: 18, imageUrl: 'tea.jpg' },
+            { name: 'Energy Drinks', category: 'beverages', price: '$2.25', unit: '1 can', stock: 40, imageUrl: 'energy.jpg' },
+
+            { name: 'Cleaning Supplies', category: 'home', price: '$6.99', unit: '1 pack', stock: 25, imageUrl: 'cleaning.jpg' },
+            { name: 'Kitchenware', category: 'home', price: '$20.00', unit: '1 set', stock: 10, imageUrl: 'kitchenware.jpg' },
+            { name: 'Bedding', category: 'home', price: '$89.99', unit: '1 set', stock: 5, imageUrl: 'bedding.jpg' },
+            { name: 'Home Decor', category: 'home', price: '$24.99', unit: 'each', stock: 8, imageUrl: 'decor.jpg' },
+            { name: 'Tools', category: 'home', price: '$29.99', unit: 'each', stock: 12, imageUrl: 'tools.jpg' },
+
+            { name: 'Dry Dog Food', category: 'pet-food', price: '$49.99', unit: '1 bag', stock: 15, imageUrl: 'dry.jpg' },
+            { name: 'Wet Cat Food', category: 'pet-food', price: '$1.99', unit: '1 can', stock: 20, imageUrl: 'cat.jpg' },
+            { name: 'Treats', category: 'pet-food', price: '$5.99', unit: '1 pack', stock: 25, imageUrl: 'treats.jpg' },
+            { name: 'Pet Toys', category: 'pet-food', price: '$9.99', unit: 'each', stock: 30, imageUrl: 'toy.jpg' },
+            { name: 'Pet Accessories', category: 'pet-food', price: '$14.99', unit: 'each', stock: 10, imageUrl: 'accessories.jpg' }
+        ];
+
+        function displayProductsByCategory(category) {
+            const categoryContainer = document.getElementById(`${category}-category`).querySelector('.product-grid');
+            categoryContainer.innerHTML = '';
+            const categoryProducts = products.filter(product => product.category === category);
+            categoryProducts.forEach(product => {
+                const productItem = document.createElement('div');
+                productItem.classList.add('product');
+                productItem.innerHTML = `
+                    <img src="${product.imageUrl}" alt="${product.name}" />
+                    <h3>${product.name}</h3>
+                    <p>${product.unit} - ${product.price}</p>
+                    <p>${product.stock > 0 ? 'In Stock' : 'Out of Stock'}</p>
+                    <button ${product.stock === 0 ? 'disabled' : ''} onclick="addToCart('${product.name}', '${product.price}', 1)">Add to Cart</button>
+                `;
+                categoryContainer.appendChild(productItem);
+            });
+        }
+
+       let cart = [];
+
+function addToCart(name, price, quantity) {
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const existingItem = cart.find(item => item.name === name);
+    if (existingItem) {
+        existingItem.quantity += quantity;
+    } else {
+        cart.push({ name, price, quantity });
+    }
+    localStorage.setItem('cart', JSON.stringify(cart)); // Save the updated cart back to local storage
+    console.log('Cart:', cart); // Debug: Log the cart to console after adding an item
+}
+
+
+        function updateCartUI() {
+    const cartContainer = document.getElementById('cartContainer'); // Make sure this ID matches your cart's container
+    cartContainer.innerHTML = ''; // Clear current cart contents
+    cart.forEach(item => {
+        cartContainer.innerHTML += `<li>${item.name} - $${item.price} x ${item.quantity}</li>`;
+    });
+}
+
+
+        function searchProducts() {
+            const searchText = document.getElementById('search-input').value.toLowerCase();
+            const searchResults = products.filter(product => product.name.toLowerCase().includes(searchText));
+            document.querySelectorAll('.product-grid').forEach(grid => grid.innerHTML = '');
+            searchResults.forEach(product => {
+                const productItem = document.createElement('div');
+                productItem.classList.add('product');
+                productItem.innerHTML = `
+                    <img src="${product.imageUrl}" alt="${product.name}" />
+                    <h3>${product.name}</h3>
+                    <p>${product.unit} - ${product.price}</p>
+                    <p>${product.stock > 0 ? 'In Stock' : 'Out of Stock'}</p>
+                    <button ${product.stock === 0 ? 'disabled' : ''} onclick="addToCart('${product.name}', '${product.price}', 1)">Add to Cart</button>
+                `;
+                document.querySelector('.product-grid').appendChild(productItem);
+            });
+        }
+
+        // Call displayProductsByCategory function for each category on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            displayProductsByCategory('frozen');
+            displayProductsByCategory('fresh');
+            displayProductsByCategory('beverages');
+            displayProductsByCategory('home');
+            displayProductsByCategory('pet-food');
+        });
+    </script>
+</body>
+</html>
